@@ -1,0 +1,10 @@
+# Pastas que não precisam ir para o Git
+build/
+dist/
+__pycache__/
+
+# Arquivos gerados automaticamente
+*.spec
+*.pyc
+*.pyo
+*.log
