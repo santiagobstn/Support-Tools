@@ -1,115 +1,84 @@
-# Support Tools – Made by: Santiago
+# Support Tools
 
-Ferramenta interna para suporte em Windows com interface gráfica (Python + PyQt5).
-Facilita o trabalho de TI automatizando diagnósticos e tarefas comuns.
-
----
+Uma ferramenta interna para suporte e automação de tarefas no Windows, desenvolvida para auxiliar na manutenção, diagnóstico e otimização de máquinas.
 
 ## Funcionalidades
 
-### 1. Machine Infos
-- Mostra todas as informações da máquina usando `systeminfo`.
-
-### 2. Cache & Temp Manager
-- Limpa:
-  - `%TEMP%`
+### 1. Cache Temp Manager
+- Limpeza automática de:
+  - Pastas temporárias (%TEMP%)
   - Cache do Windows (Prefetch)
   - Cache do Teams
   - Cache do Outlook/Office
   - Cache de navegadores (Edge, Chrome, Firefox)
-- Faz `wsreset` para limpar cache da Microsoft Store.
+- Executa wsreset.exe para limpar cache da Microsoft Store.
+- Mostra relatório do espaço liberado ao final.
 
-### 3. Printer Fixer
-- Remove todas as impressoras e drivers
-- Reinicia o serviço de spooler
-- Reinstala a impressora padrão `\\srv-wdsprint`
+### 2. Printer Fixer
+- Reinicia o serviço de spooler.
+- Remove todas as impressoras e drivers instalados.
+- Reinstala automaticamente a impressora padrão da rede.
+- Observação: requer executar o programa como administrador.
 
-### 4. Driver Doctor
-- Lista drivers e dispositivos
-- Destaca os que têm problemas
-- Abre automaticamente o Gerenciador de Dispositivos
-- Exibe um diagnóstico final
+### 3. Evidence Collector
+- Coleta evidências e gera relatórios (logs) em C:\Evidencias.
 
-### 5. Evidence Collector
-- Coleta:
-  - Processos ativos
-  - Logs do Windows (eventos recentes)
-  - Conexões de rede
-  - Programas na inicialização
-  - Desktop e Downloads do usuário
-- Compacta tudo em `C:\Evidencias\{PC}-{Data}`
-- Abre a pasta ao finalizar
+### 4. Drivers Update
+- Atualiza automaticamente todos os drivers do sistema.
+- Exibe um resumo dos drivers atualizados ao final.
 
-### 6. See Evidences
-- Abre diretamente a pasta `C:\Evidencias`
+## Interface
 
----
+### Tela Principal
+- Logo centralizada no topo.
+- Informações da máquina:
+  - Hostname, usuário, sistema operacional
+  - Disco usado/total
+  - Uso de RAM e CPU
+  - Status do BitLocker e antivírus
+  - Tempo de uptime
+- Botões principais organizados em uma grade limpa e uniforme.
+- Links no rodapé:
+  - See Evidences – abre a pasta C:\Evidencias
+  - View Logs – exibe as últimas ações executadas.
+
+## Pré-requisitos
+
+- Windows 10/11
+- Python 3.10+ com:
+  pip install pyqt5 psutil
+- Executar como administrador para:
+  - Atualizar drivers
+  - Corrigir impressoras
+  - Coletar algumas evidências do sistema
 
 ## Como executar
 
-### 1. Executar direto no Python
-
-Requisitos:
-- Python 3.9 ou superior
-- Dependências:
-
-pip install PyQt5
-
-Executar:
-
+### Via Python:
 python main.py
 
----
+### Via Executável:
+Gere um .exe com:
+pyinstaller --onefile --noconsole --icon=icons/icon.ico main.py
 
-### 2. Gerar um executável (.exe)
+Ou use o build.bat incluído no projeto.
 
-Já existe um script `build.bat` na raiz do projeto.
-Ele:
-
-* Limpa pastas antigas (`build`, `dist`)
-* Gera o `.exe` com ícone
-* Renomeia para `Support_Tools.exe`
-* Abre a pasta `dist` no final
-
-Para usar:
-
-* Clique duas vezes em `build.bat`
-* O executável final estará em `dist\Support_Tools.exe`
-
-Ou rode manualmente:
-
-pyinstaller --onefile --noconsole --icon=icons\icon.ico main.py
-
----
-
-## Estrutura do projeto
-
-Support Tools/
-│
+## Estrutura do Projeto
+Support-Tools/
+├── main.py
+├── app.manifest
+├── build.bat
+├── icons/
+│   ├── icon.ico
+│   └── icon.png
 ├── modules/
 │   ├── cache_manager.py
-│   ├── driver_doctor.py
+│   ├── drivers_update.py
 │   ├── evidence_collector.py
 │   ├── printer_fixer.py
-│
-├── icons/
-│   └── icon.ico
-│
-├── build.bat
-├── main.py
-├── README.md
-└── .gitignore
+│   ├── machine_status.py
+│   └── security_status.py
+└── README.md
 
----
-
-## Tecnologias
-
-* Python 3
-* PyQt5
-* PowerShell e utilitários do Windows
-
----
-
-## Autor
-
-Santiago
+## Notas
+- Desenvolvido por Santiago para uso interno.
